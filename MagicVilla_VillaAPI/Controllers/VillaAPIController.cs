@@ -11,7 +11,15 @@ namespace MagicVilla_VillaAPI.Controllers
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
-        #region GET ALL
+        #region DI
+
+        public VillaAPIController()
+        {
+        }
+
+        #endregion
+
+        # region GET ALL
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
