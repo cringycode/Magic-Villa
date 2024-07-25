@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F03D5FF4-2E99-4C42-A9EA-8997B2627C94}|MagicVilla_VillaAPI\\MagicVilla_VillaAPI.csproj|d:\\dev\\projects\\dotnet\\magicvilla\\magic-villa\\magicvilla\\magicvilla_villaapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F03D5FF4-2E99-4C42-A9EA-8997B2627C94}|MagicVilla_VillaAPI\\MagicVilla_VillaAPI.csproj|solutionrelative:magicvilla_villaapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F03D5FF4-2E99-4C42-A9EA-8997B2627C94}|MagicVilla_VillaAPI\\MagicVilla_VillaAPI.csproj|d:\\dev\\projects\\dotnet\\magicvilla\\magic-villa\\magicvilla\\magicvilla_villaapi\\controllers\\villaapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F03D5FF4-2E99-4C42-A9EA-8997B2627C94}|MagicVilla_VillaAPI\\MagicVilla_VillaAPI.csproj|solutionrelative:magicvilla_villaapi\\controllers\\villaapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -23,12 +31,38 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20240725115220_AddVillaNumberToDb.cs",
+              "DocumentMoniker": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs",
+              "RelativeDocumentMoniker": "MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs",
+              "ToolTip": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs",
+              "RelativeToolTip": "MagicVilla_VillaAPI\\Migrations\\20240725115220_AddVillaNumberToDb.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAGoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T11:52:20.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "MagicVilla_VillaAPI\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "MagicVilla_VillaAPI\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFcAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T11:51:01.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "VillaAPIController.cs",
               "DocumentMoniker": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Controllers\\VillaAPIController.cs",
               "RelativeDocumentMoniker": "MagicVilla_VillaAPI\\Controllers\\VillaAPIController.cs",
               "ToolTip": "D:\\Dev\\Projects\\Dotnet\\MagicVilla\\Magic-Villa\\MagicVilla\\MagicVilla_VillaAPI\\Controllers\\VillaAPIController.cs",
               "RelativeToolTip": "MagicVilla_VillaAPI\\Controllers\\VillaAPIController.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAAAJUAAAAfAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOwAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T16:58:09.244Z",
               "EditorCaption": ""
