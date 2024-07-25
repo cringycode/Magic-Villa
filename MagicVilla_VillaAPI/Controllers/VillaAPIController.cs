@@ -46,7 +46,8 @@ namespace MagicVilla_VillaAPI.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
             }
 
             return _response;
@@ -130,6 +131,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #region DELETE
 
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete("{id:int}", Name = "DeleteVilla")]
@@ -143,21 +145,21 @@ namespace MagicVilla_VillaAPI.Controllers
                 }
 
                 var villa = await _dbVilla.GetAsync(u => u.Id == id);
-                if (villa is null)
+                if (villa == null)
                 {
                     return NotFound();
                 }
 
-                _dbVilla.RemoveAsync(villa);
+                await _dbVilla.RemoveAsync(villa);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
             }
 
             return _response;
