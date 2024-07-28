@@ -26,7 +26,8 @@ public class Repository<T> : IRepository<T> where T : class
         await SaveAsync();
     }
 
-    public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
+    public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true,
+        string? includeProperties = null)
     {
         IQueryable<T> query = dbSet;
         if (!tracked)
@@ -39,16 +40,34 @@ public class Repository<T> : IRepository<T> where T : class
             query = query.Where(filter);
         }
 
+        if (includeProperties != null)
+        {
+            foreach (var includeProp in includeProperties.Split(new Char[] { ',' },
+                         StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
+        }
+
         return await query.FirstOrDefaultAsync();
     }
 
-    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
     {
         IQueryable<T> query = dbSet;
 
         if (filter != null)
         {
             query = query.Where(filter);
+        }
+
+        if (includeProperties != null)
+        {
+            foreach (var includeProp in includeProperties.Split(new Char[] { ',' },
+                         StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
         }
 
         return await query.ToListAsync();
