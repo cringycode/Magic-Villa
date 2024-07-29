@@ -73,6 +73,25 @@ public class VillaNumberController : Controller
             {
                 return RedirectToAction(nameof(IndexVillaNumber));
             }
+            else
+            {
+                if (response.ErrorMessages.Count > 0)
+                {
+                    ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
+                }
+            }
+        }
+
+        var resp = await _villaService.GetAllAsync<APIResponse>();
+        if (resp != null && resp.IsSuccess)
+        {
+            model.VillaList = JsonConvert.DeserializeObject<List<VillaDTO>>
+                (Convert.ToString(resp.Result)).Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            });
+            ;
         }
 
         return View(model);
@@ -80,8 +99,8 @@ public class VillaNumberController : Controller
 
     #endregion
 
-    // #region UPDATE
-    //
+    #region UPDATE
+
     // public async Task<IActionResult> UpdateVilla(int villaId)
     // {
     //     var response = await _villaNumberService.GetAsync<APIResponse>(villaId);
@@ -109,8 +128,8 @@ public class VillaNumberController : Controller
     //
     //     return View(model);
     // }
-    //
-    // #endregion
+
+    #endregion
 
     #region DELETE
 
