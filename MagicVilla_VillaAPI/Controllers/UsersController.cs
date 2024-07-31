@@ -46,6 +46,8 @@ namespace MagicVilla_VillaAPI.Controllers
 
         #endregion
 
+        #region REGISTER
+
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterationRequestDTO model)
         {
@@ -71,5 +73,7 @@ namespace MagicVilla_VillaAPI.Controllers
             _response.IsSuccess = true;
             return Ok(_response);
         }
+
+        #endregion
     }
 }
