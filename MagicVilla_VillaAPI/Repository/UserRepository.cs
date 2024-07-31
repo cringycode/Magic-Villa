@@ -1,7 +1,11 @@
-﻿using MagicVilla_VillaAPI.Data;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MagicVilla_VillaAPI.Repository;
 
@@ -10,13 +14,17 @@ public class UserRepository : IUserRepository
     #region DI
 
     private readonly ApplicationDbContext _db;
+    private string secretKey;
 
-    public UserRepository(ApplicationDbContext db)
+    public UserRepository(ApplicationDbContext db, IConfiguration configuration)
     {
         _db = db;
+        secretKey = configuration.GetValue<string>("ApiSettings:Secret");
     }
 
     #endregion
+
+    #region IS UNIQUE
 
     public bool IsUniqueUser(string username)
     {
@@ -29,10 +37,48 @@ public class UserRepository : IUserRepository
         return false;
     }
 
+    #endregion
+
+    #region LOGIN
+
     public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
     {
-        throw new NotImplementedException();
+        var user = _db.LocalUsers.FirstOrDefault(u => u.UserName.ToLower()
+            == loginRequestDTO.UserName.ToLower() && u.Password == loginRequestDTO.Password);
+
+        if (user is null)
+        {
+            return null;
+        }
+        // if user was found, generate JWT Token.
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(secretKey);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role)
+            }),
+            Expires = DateTime.UtcNow.AddDays(7),
+            SigningCredentials = new
+                (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO()
+        {
+            Token = tokenHandler.WriteToken(token),
+            User = user
+        };
+        return loginResponseDTO;
     }
+
+    #endregion
+
+    #region REGISTER
 
     public async Task<LocalUser> Register(RegisterationRequestDTO registerationRequestDTO)
     {
@@ -48,4 +94,6 @@ public class UserRepository : IUserRepository
         user.Password = "";
         return user;
     }
+
+    #endregion
 }
