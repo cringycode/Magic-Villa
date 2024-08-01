@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/UsersAuth")]
     [ApiController]
     public class UsersController : Controller
     {
@@ -26,7 +26,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
         #region LOGIN
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
         {
             var loginResponse = await _userRepo.Login(model);
@@ -48,7 +48,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
         #region REGISTER
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterationRequestDTO model)
         {
             bool ifUserNameUnique = _userRepo.IsUniqueUser(model.UserName);
