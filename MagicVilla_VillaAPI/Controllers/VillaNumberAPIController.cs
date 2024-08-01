@@ -5,6 +5,7 @@ using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repository;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace MagicVilla_VillaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class VillaNumberAPIController : ControllerBase
     {
         #region DI
@@ -102,14 +104,14 @@ namespace MagicVilla_VillaAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<APIResponse>> CreateVillaNumber([FromBody] VillaNumberCreateDTO createDTO)
         {
             try
             {
                 if (await _dbVillaNumber.GetAsync(u => u.VillaNo == createDTO.VillaNo) != null)
                 {
-                    ModelState.AddModelError("ErrorMessages", "Villa Number Already Exists!");
+                    ModelState.AddModelError("ErrorMessages", "Villa Number already Exists!");
                     return BadRequest(ModelState);
                 }
 
@@ -119,23 +121,24 @@ namespace MagicVilla_VillaAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (createDTO is null)
+                if (createDTO == null)
                 {
                     return BadRequest(createDTO);
                 }
 
                 VillaNumber villaNumber = _mapper.Map<VillaNumber>(createDTO);
 
+
                 await _dbVillaNumber.CreateAsync(villaNumber);
                 _response.Result = _mapper.Map<VillaNumberDTO>(villaNumber);
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetVillaNumber", new { id = villaNumber.VillaNo }, _response);
+                return CreatedAtRoute("GetVilla", new { id = villaNumber.VillaNo }, _response);
             }
-
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
             }
 
             return _response;
