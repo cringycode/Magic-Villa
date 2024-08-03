@@ -13,9 +13,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Authorize(Roles = "admin")]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class VillaNumberAPIController : ControllerBase
     {
         #region DI
@@ -38,6 +40,7 @@ namespace MagicVilla_VillaAPI.Controllers
         # region GET ALL
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<APIResponse>> GetVillaNumbers()
         {
@@ -59,6 +62,13 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        [MapToApiVersion("2.0")]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
         #region GET
 
