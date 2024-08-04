@@ -65,8 +65,8 @@ public class BaseService : IBaseService
             try
             {
                 APIResponse ApiResponse = JsonConvert.DeserializeObject<APIResponse>(apiContent);
-                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest
-                    || apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (apiResponse != null && (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest
+                                            || apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound))
                 {
                     ApiResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                     ApiResponse.IsSuccess = false;
