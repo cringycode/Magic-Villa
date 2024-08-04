@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace MagicVilla_VillaAPI.Controllers
         # region GET ALL
 
         [HttpGet]
-        [Authorize]
+        [ResponseCache(CacheProfileName = "Default30")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -64,6 +64,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("{id:int}", Name = "GetVilla")]
+        [ResponseCache(Duration = 30)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
