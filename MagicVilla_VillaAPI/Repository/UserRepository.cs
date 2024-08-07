@@ -18,14 +18,16 @@ public class UserRepository : IUserRepository
 
     private readonly ApplicationDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private string secretKey;
     private readonly IMapper _mapper;
 
     public UserRepository(ApplicationDbContext db, IConfiguration configuration,
-        UserManager<ApplicationUser> userManager, IMapper mapper)
+        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
     {
         _db = db;
         _userManager = userManager;
+        _roleManager = roleManager;
         _mapper = mapper;
         secretKey = configuration.GetValue<string>("ApiSettings:Secret");
     }
@@ -74,7 +76,7 @@ public class UserRepository : IUserRepository
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName.ToString()),
                 new Claim(ClaimTypes.Role, roles.FirstOrDefault())
             }),
             Expires = DateTime.UtcNow.AddDays(7),
@@ -87,7 +89,7 @@ public class UserRepository : IUserRepository
         {
             Token = tokenHandler.WriteToken(token),
             User = _mapper.Map<UserDTO>(user),
-            Role = roles.FirstOrDefault()
+            // Role = roles.FirstOrDefault()
         };
         return loginResponseDTO;
     }
@@ -111,6 +113,12 @@ public class UserRepository : IUserRepository
             var result = await _userManager.CreateAsync(user, registerationRequestDTO.Password);
             if (result.Succeeded)
             {
+                if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("customer"));
+                }
+
                 await _userManager.AddToRoleAsync(user, "admin");
                 var userToReturn = _db.ApplicationUsers
                     .FirstOrDefault(u => u.UserName == registerationRequestDTO.UserName);
